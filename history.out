@@ -1,0 +1,66 @@
+    1  hostname
+    2  ip addr show
+    3  ip route
+    4  ping -c 4 8.8.8.8 > ping.out
+    5  cat ping.out
+    6  systemd off
+    7  systemctl poweroff
+    8  dnf -y upgrade --refresh
+    9  dnf -y install nginx libcap-ng-utils
+   10  dnf download --destdir=/tmp tcpdump
+   11  rpm -Uvh /tmp/tcpdump-*.rpm
+   12  dnf history list > dnf.out
+   13  cat dnf.out
+   14  rpm -q tcpdump
+   15  ls -l /tmp/tcpdump-*.rpm
+   16  lsblk -o NAME,SIZE,TYPE,MOUNTPOINT
+   17  systemctl poweroff
+   18  lsblk -o NAME,SIZE,TYPE,MOUNTPOINT
+   19  fdisk /dev/sdb
+   20  mkfs.ext4 -L MEPHI_WEB /dev/sdb1
+   21  mkdir -p /mephi-web
+   22  printf "LABEL=MEPHI_WEB  /mephi-web  ext4  defaults  0 0\n" >> /etc/fstab
+   23  mount -a
+   24  findmnt /mephi-web
+   25  systemctl enable --now nginx
+   26  journalctl -u nginx.service -b | tee journalctl.out
+   27  mkdir -p /data/mephi-2026
+   28  groupadd -g 4444 curators
+   29  groupadd mephi-team
+   30  useradd -u 5501 -m -G mephi-team user1
+   31  useradd -u 5502 -m -G mephi-team user2
+   32  useradd -u 5503 -m -G mephi-team user3
+   33  useradd -m -g curators curator1
+   34  useradd -m -g curators curator2
+   35  chown root:mephi-team /data/mephi-2026
+   36  chmod 2770 /data/mephi-2026
+   37  setfacl -m g:curators:rx /data/mephi-2026
+   38  setfacl -m d:g:mephi-team:rwx /data/mephi-2026
+   39  setfacl -m d:g:curators:rx /data/mephi-2026
+   40  setfacl -m o::0 /data/mephi-2026
+   41  setfacl -m d:o::0 /data/mephi-2026
+   42  getfacl /data/mephi-2026
+   43  setcap cap_net_raw,cap_net_admin=eip $(command -v tcpdump)
+   44  getcap -v $(command -v tcpdump)
+   45  sudo -u user1 tcpdump -c 1 -i enp0s8
+   46  setenforce 1
+   47  vi /etc/selinux/config
+   48  semanage fcontext -a -t httpd_sys_content_t "/mephi-web(/.*)?"
+   49  restorecon -Rv /mephi-web
+   50  vi /etc/nginx/nginx.conf
+   51  nginx -t
+   52  systemctl reload nginx
+   53  vi /etc/pam.d/login
+   54  vi /etc/security/access.conf
+   55  vi /etc/login.defs
+   56  chage -M 90 user1
+   57  chage -M 90 user2
+   58  chage -M 90 user3
+   69  chage -M 90 curator1
+   60  chage -M 90 curator2
+   61  vi /etc/security/pwquality.conf
+   62  vi /mephi-web/index.html
+   63  restorecon -v /mephi-web/index.html
+   64  systemctl reload nginx
+   65  curl http://localhost/
+   66  history > history.out

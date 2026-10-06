@@ -1,0 +1,10 @@
+   Static hostname: mephi-2026.domain.local
+         Icon name: computer
+        Machine ID: e384c1bc661645558b2218d509bfbb17
+           Boot ID: 864f7536dd404bd094a3e86ecac65a2f
+  Operating System: Fedora Linux 41 (Server Edition)
+       CPE OS Name: cpe:/o:fedoraproject:fedora:41
+    OS Support End: Mon 2025-12-15
+OS Support Expired: 9month 3w
+            Kernel: Linux 6.17.10-100.fc41.aarch64
+      Architecture: arm64
